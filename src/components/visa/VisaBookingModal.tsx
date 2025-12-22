@@ -131,7 +131,7 @@ export default function VisaBookingModal({ isOpen, onClose, visa, onSubmit }: Vi
 
     // Form Hook
     const form = useForm<BookingFormData>({
-        resolver: zodResolver(createVisaBookingSchema(visa)),
+        resolver: zodResolver(createVisaBookingSchema(visa)) as any,
         defaultValues: {
             quantity: 1,
             applicants: [{ fullName: '', gender: 'Male', dob: '', passportNumber: '', passportExpiry: '', nationality: '' }],
