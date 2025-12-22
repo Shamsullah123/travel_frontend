@@ -27,7 +27,7 @@ export default function NewPackagePage() {
 
     const fetchFacilities = async () => {
         try {
-            const data = await ApiClient.get("/facilities");
+            const data = await ApiClient.get<any[]>("/facilities");
             setFacilities(data);
         } catch (error) {
             console.error("Failed to fetch facilities:", error);
