@@ -348,7 +348,7 @@ export default function VisaMarketplacePage() {
                                                     {/* @ts-ignore */}
                                                     {visa.agency_id?.contactInfo?.phone && (
                                                         <div className="text-xs text-indigo-600 flex items-center gap-1 mt-0.5">
-                                                            <span>📞</span> {visa.agency_id.contactInfo.phone}
+                                                            <span>📞</span> {(visa.agency_id as any).contactInfo.phone}
                                                         </div>
                                                     )}
                                                 </td>
@@ -430,7 +430,7 @@ export default function VisaMarketplacePage() {
                                             {/* @ts-ignore */}
                                             {visa.agency_id?.contactInfo?.phone && (
                                                 <div className="text-xs text-indigo-600 flex items-center gap-1 mt-1">
-                                                    <span>📞</span> {visa.agency_id.contactInfo.phone}
+                                                    <span>📞</span> {(visa.agency_id as any).contactInfo.phone}
                                                 </div>
                                             )}
                                         </div>
