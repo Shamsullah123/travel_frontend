@@ -87,7 +87,7 @@ export class ApiClient {
         }
 
         const text = await res.text();
-        return text ? JSON.parse(text) : {};
+        return text ? JSON.parse(text) : ({} as T);
     }
 
     static async put<T>(path: string, body: any): Promise<T> {
