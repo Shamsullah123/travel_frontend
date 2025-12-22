@@ -64,7 +64,7 @@ export default function SystemConfigPage() {
         if (!confirm('Are you sure you want to delete this item?')) return;
 
         try {
-            await ApiClient.del(`/system-config/${id}`);
+            await ApiClient.delete(`/system-config/${id}`);
             await loadConfigs();
             alert('Deleted successfully!');
         } catch (error: any) {

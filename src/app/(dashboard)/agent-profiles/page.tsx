@@ -80,7 +80,7 @@ export default function AgentProfilesPage() {
     const handleDelete = async (id: string) => {
         if (!confirm("Are you sure? This will delete the profile info, but won't delete ledger history.")) return;
         try {
-            await ApiClient.del(`/agent-profiles/${id}`);
+            await ApiClient.delete(`/agent-profiles/${id}`);
             loadProfiles();
         } catch (e) {
             alert("Failed to delete profile");

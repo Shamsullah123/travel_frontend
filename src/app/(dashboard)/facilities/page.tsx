@@ -40,7 +40,7 @@ export default function FacilitiesPage() {
     const handleDelete = async () => {
         if (!deleteId) return;
         try {
-            await ApiClient.del(`/facilities/${deleteId}`);
+            await ApiClient.delete(`/facilities/${deleteId}`);
             setDeleteId(null);
             fetchFacilities();
         } catch (e: any) {

@@ -29,7 +29,7 @@ export default function AgentsPage() {
         if (!confirm("Are you sure you want to delete this agent?")) return;
 
         try {
-            await ApiClient.del(`/agents/${id}`);
+            await ApiClient.delete(`/agents/${id}`);
             setAgents(agents.filter(a => a._id.$oid !== id));
         } catch (e) {
             alert("Failed to delete agent");

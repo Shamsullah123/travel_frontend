@@ -42,7 +42,7 @@ export default function PackagesPage() {
     const handleDelete = async () => {
         if (!deleteConfirmId) return;
         try {
-            await ApiClient.del(`/packages/${deleteConfirmId}`);
+            await ApiClient.delete(`/packages/${deleteConfirmId}`);
             fetchPackages();
         } catch (e: any) {
             alert(e.message || "Failed to delete package");

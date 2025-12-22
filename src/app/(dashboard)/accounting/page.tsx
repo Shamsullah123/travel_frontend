@@ -141,7 +141,7 @@ function AgentsView() {
         const id = agentToDelete;
 
         try {
-            await ApiClient.del(`/agents/${id}`);
+            await ApiClient.delete(`/agents/${id}`);
             setAgents(currentAgents => currentAgents.filter(a => (a._id?.$oid || a._id) !== id));
             setShowDeleteModal(false);
             setAgentToDelete(null);
@@ -914,7 +914,7 @@ function MiscView() {
         if (!expenseToDelete) return;
 
         try {
-            await ApiClient.del(`/accounting/misc-expenses/${expenseToDelete}`);
+            await ApiClient.delete(`/accounting/misc-expenses/${expenseToDelete}`);
             setShowDeleteModal(false);
             setExpenseToDelete(null);
             loadExpenses();
