@@ -27,6 +27,7 @@ export default function NewPackagePage() {
 
     const fetchFacilities = async () => {
         try {
+            // Explicitly typed to avoid build error
             const data = await ApiClient.get<any[]>("/facilities");
             setFacilities(data);
         } catch (error) {
