@@ -31,7 +31,7 @@ export default function EditPackagePage() {
             try {
                 const [packageData, facilitiesData] = await Promise.all([
                     ApiClient.get<Package>(`/packages/${id}`),
-                    ApiClient.get("/facilities")
+                    ApiClient.get<any[]>("/facilities")
                 ]);
 
                 setFacilities(facilitiesData);
