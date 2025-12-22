@@ -4,7 +4,8 @@ import connectToDatabase from "@/lib/db";
 import VisaGroup from "@/models/VisaGroup";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     const session = await getServerSession(authOptions);
     if (!session) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -18,7 +19,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 
         await connectToDatabase();
 
-        const visa = await VisaGroup.findOne({ _id: params.id, agency_id: session.user.agencyId });
+        const visa = await VisaGroup.findOne({ _id: id, agency_id: session.user.agencyId });
         if (!visa) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
         // Rule: Cannot activate if available = 0

@@ -7,7 +7,7 @@ import VisaGroup from '@/models/VisaGroup';
 
 export async function POST(
     req: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     await connectToDatabase();
 
@@ -17,7 +17,8 @@ export async function POST(
     }
 
     try {
-        const bookingId = params.id;
+        const { id } = await params;
+        const bookingId = id;
         const agencyId = session.user.agencyId;
 
         // Find the booking
