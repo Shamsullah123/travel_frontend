@@ -16,6 +16,7 @@ export interface CashFlowData {
 export interface RevenueData {
     name: string;
     value: number;
+    [key: string]: any;
 }
 
 export interface OutstandingPayment {
