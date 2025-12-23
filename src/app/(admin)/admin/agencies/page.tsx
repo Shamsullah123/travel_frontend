@@ -12,7 +12,7 @@ export default function AgenciesPage() {
     const fetchAgencies = () => {
         if (!session?.user?.accessToken) return;
 
-        const BACKEND_URL = 'http://127.0.0.1:5000';
+        const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
         let url = `${BACKEND_URL}/api/admin/agencies`;
         if (filter) url += `?status=${filter}`;
 
@@ -53,7 +53,7 @@ export default function AgenciesPage() {
         }
 
         try {
-            const BACKEND_URL = 'http://127.0.0.1:5000';
+            const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
             const url = `${BACKEND_URL}/api/admin/agencies/${id}/status`;
             console.log("Request URL:", url);
 
@@ -97,7 +97,7 @@ export default function AgenciesPage() {
         if (!newPass) return;
 
         try {
-            const BACKEND_URL = 'http://127.0.0.1:5000';
+            const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
             console.log(`Resetting password for agency ${id}`);
             const res = await fetch(`${BACKEND_URL}/api/admin/agencies/${id}/reset-password`, {
                 method: 'POST',

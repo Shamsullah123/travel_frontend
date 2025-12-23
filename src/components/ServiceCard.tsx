@@ -164,7 +164,7 @@ export default function ServiceCard({ customer, moaleem, agency, booking }: Serv
                                     <img
                                         src={customer.pictureUrl.startsWith('http')
                                             ? customer.pictureUrl
-                                            : `${process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000'}/uploads/${customer.pictureUrl}`
+                                            : `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/uploads/${customer.pictureUrl}`
                                         }
                                         alt="Customer"
                                         className="w-32 h-32 object-cover border-2 border-gray-300 rounded-lg bg-white"
