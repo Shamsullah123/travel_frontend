@@ -7,7 +7,7 @@ import { ApiClient } from "@/lib/api";
 // Helper to refresh token
 async function refreshAccessToken(token: JWT) {
     try {
-        const url = `http://127.0.0.1:5001/api/auth/refresh`;
+        const url = `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}/api/auth/refresh`;
         const response = await fetch(url, {
             method: "POST",
             headers: {
