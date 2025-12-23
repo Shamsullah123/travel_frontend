@@ -12,7 +12,8 @@ export default function AgenciesPage() {
     const fetchAgencies = () => {
         if (!session?.user?.accessToken) return;
 
-        const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
+        const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+        const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000');
         let url = `${BACKEND_URL}/api/admin/agencies`;
         if (filter) url += `?status=${filter}`;
 
