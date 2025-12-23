@@ -8,7 +8,7 @@ import { ApiClient } from "@/lib/api";
 async function refreshAccessToken(token: JWT) {
     try {
         const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
-        const url = `${process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000')}/api/auth/refresh`;
+        const url = `${process.env.NEXT_PUBLIC_SERVER_URL || ((process.env.NODE_ENV === 'production' || process.env.VERCEL) ? PROD_SERVER : 'http://localhost:5000')}/api/auth/refresh`;
         const response = await fetch(url, {
             method: "POST",
             headers: {
