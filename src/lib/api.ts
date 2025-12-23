@@ -1,7 +1,10 @@
 import { getSession, signOut } from "next-auth/react";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+const PROD_API = "https://travel-backend-jmld.onrender.com/api";
+const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? PROD_API : "http://localhost:5000/api");
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : "http://localhost:5000");
 
 type RequestConfig = RequestInit & {
     token?: string;
