@@ -595,7 +595,7 @@ function CustomersView() {
                                         </td>
                                         <td className="px-6 py-4 text-sm text-gray-500">
                                             <div className="flex gap-2">
-                                                {t.slip_attachment && <a href={`http://localhost:5000${t.slip_attachment}`} target="_blank" rel="noopener noreferrer">📄 Slip</a>}
+                                                {t.slip_attachment && <a href={`${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000'}${t.slip_attachment}`} target="_blank" rel="noopener noreferrer">📄 Slip</a>}
                                             </div>
                                         </td>
                                     </tr>

@@ -156,8 +156,8 @@ export default function AgentForm() {
             const token = session?.user?.accessToken || session?.accessToken;
 
             const url = isNew
-                ? 'http://localhost:5000/api/agents/'
-                : `http://localhost:5000/api/agents/${id}`;
+                ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/agents/`
+                : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/agents/${id}`;
             const method = isNew ? 'POST' : 'PUT';
 
             console.log("Submitting to", url, "with token", token ? "PRESENT" : "MISSING");
