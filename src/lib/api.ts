@@ -3,8 +3,10 @@ import { getSession, signOut } from "next-auth/react";
 const PROD_API = "https://travel-backend-jmld.onrender.com/api";
 const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || (process.env.NODE_ENV === 'production' ? PROD_API : "http://localhost:5000/api");
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : "http://localhost:5000");
+const isVercel = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || ((process.env.NODE_ENV === 'production' || isVercel) ? PROD_API : "http://localhost:5000/api");
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || ((process.env.NODE_ENV === 'production' || isVercel) ? PROD_SERVER : "http://localhost:5000");
 
 type RequestConfig = RequestInit & {
     token?: string;
