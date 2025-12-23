@@ -1,7 +1,7 @@
 import { getSession, signOut } from "next-auth/react";
 
-const BASE_URL = "http://localhost:5000/api";
-const SERVER_URL = "http://localhost:5000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
 type RequestConfig = RequestInit & {
     token?: string;
