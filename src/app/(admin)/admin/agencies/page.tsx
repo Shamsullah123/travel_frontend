@@ -54,7 +54,8 @@ export default function AgenciesPage() {
         }
 
         try {
-            const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
+            const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+            const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000');
             const url = `${BACKEND_URL}/api/admin/agencies/${id}/status`;
             console.log("Request URL:", url);
 
@@ -98,7 +99,8 @@ export default function AgenciesPage() {
         if (!newPass) return;
 
         try {
-            const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:5000';
+            const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+            const BACKEND_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000');
             console.log(`Resetting password for agency ${id}`);
             const res = await fetch(`${BACKEND_URL}/api/admin/agencies/${id}/reset-password`, {
                 method: 'POST',
