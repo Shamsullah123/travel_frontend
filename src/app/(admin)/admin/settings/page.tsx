@@ -12,24 +12,35 @@ export default function SettingsPage() {
     useEffect(() => {
         if (session?.user?.accessToken) {
             // Fetch Messages
-            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/messages`, {
-                headers: { Authorization: `Bearer ${session.user.accessToken}` },
-            })
-                .then(res => res.json())
-                .then(data => setMessages(data));
+            const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+            const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000');
 
-            // Fetch Settings
-            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings`, {
-                headers: { Authorization: `Bearer ${session.user.accessToken}` },
+            fetch(`${BASE_URL}/api/admin/messages`, {
+                headers: { Authorization: `Bearer ${session.user.accessToken}` }
             })
                 .then(res => res.json())
-                .then(data => setSettings(data));
+                .then(data => setMessages(data))
+                .catch(err => console.error(err));
+
+            fetch(`${BASE_URL}/api/admin/settings`, {
+                headers: { Authorization: `Bearer ${session.user.accessToken}` }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data) setSettings(data);
+                })
+                .catch(err => console.error(err));
         }
+
     }, [session]);
 
-    const saveSettings = async () => {
+    const handleSave = async () => {
+        if (!session?.user?.accessToken) return;
+
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/settings`, {
+            const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+            const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000');
+            await fetch(`${BASE_URL}/api/admin/settings`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -10,7 +10,10 @@ export default function AdminDashboardPage() {
 
     useEffect(() => {
         if (session?.user?.accessToken) {
-            fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/stats`, {
+            const PROD_SERVER = "https://travel-backend-jmld.onrender.com";
+            const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL || (process.env.NODE_ENV === 'production' ? PROD_SERVER : 'http://localhost:5000');
+
+            fetch(`${BASE_URL}/api/admin/stats`, {
                 headers: {
                     Authorization: `Bearer ${session.user.accessToken}`,
                 },
