@@ -42,7 +42,7 @@ interface Passenger {
     givenName: string;
     surName: string;
     passportNumber: string;
-    dob: string;
+    passportIssueDate: string;
     expiryDate: string;
 }
 
@@ -70,7 +70,7 @@ export default function BookingModal({ isOpen, onClose, ticketGroup, onSubmit }:
                 givenName: '',
                 surName: '',
                 passportNumber: '',
-                dob: '',
+                passportIssueDate: '',
                 expiryDate: ''
             };
         };
@@ -91,7 +91,7 @@ export default function BookingModal({ isOpen, onClose, ticketGroup, onSubmit }:
         if (!isOpen) {
             setCounts({ Adult: 1, Child: 0, Infant: 0 });
             setPassengers([{
-                type: 'Adult', title: 'Mr', givenName: '', surName: '', passportNumber: '', dob: '', expiryDate: ''
+                type: 'Adult', title: 'Mr', givenName: '', surName: '', passportNumber: '', passportIssueDate: '', expiryDate: ''
             }]);
             return;
         }
@@ -127,7 +127,7 @@ export default function BookingModal({ isOpen, onClose, ticketGroup, onSubmit }:
                     givenName: '',
                     surName: '',
                     passportNumber: '',
-                    dob: '',
+                    passportIssueDate: '',
                     expiryDate: ''
                 };
                 // Insert at end of this type block
@@ -368,12 +368,12 @@ export default function BookingModal({ isOpen, onClose, ticketGroup, onSubmit }:
                                                 />
                                             </div>
                                             <div className="md:col-span-4">
-                                                <label className="block text-xs font-medium text-gray-700 mb-1">Date of Birth</label>
+                                                <label className="block text-xs font-medium text-gray-700 mb-1">Passport Issue Date</label>
                                                 <input
                                                     type="date"
                                                     className="w-full border rounded px-2 py-1.5 text-sm"
-                                                    value={passenger.dob}
-                                                    onChange={e => handlePassengerChange(idx, 'dob', e.target.value)}
+                                                    value={passenger.passportIssueDate}
+                                                    onChange={e => handlePassengerChange(idx, 'passportIssueDate', e.target.value)}
                                                     required
                                                 />
                                             </div>

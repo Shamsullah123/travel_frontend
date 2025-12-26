@@ -95,31 +95,7 @@ export default function DashboardHome() {
             {/* Today's Tasks Widgets */}
             <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
 
-                {/* 1. Pending Visa Follow-ups */}
-                <div className="bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                        <span className="bg-indigo-100 text-indigo-800 p-1 rounded-md mr-2">✈️</span>
-                        Visa Follow-ups
-                    </h3>
-                    <ul className="space-y-3">
-                        {tasks.visaFollowUps.length === 0 ? (
-                            <li className="text-sm text-gray-500">No pending checks.</li>
-                        ) : (
-                            tasks.visaFollowUps.map((visa: any) => (
-                                <li key={visa._id} className="border-b border-gray-100 pb-2 last:border-0 last:pb-0">
-                                    <div className="flex justify-between">
-                                        <div className="text-sm font-medium text-gray-900">{visa.country} Visa</div>
-                                        <div className="text-xs text-yellow-600 bg-yellow-50 px-2 rounded-full">{visa.status}</div>
-                                    </div>
-                                    <div className="text-xs text-gray-500 mt-1">Expected: {visa.expectedIssueDate ? new Date(visa.expectedIssueDate).toLocaleDateString() : 'N/A'}</div>
-                                </li>
-                            ))
-                        )}
-                    </ul>
-                    <div className="mt-4">
-                        <Link href="/visa-cases" className="text-sm text-indigo-600 hover:text-indigo-900 font-medium">View all &rarr;</Link>
-                    </div>
-                </div>
+
 
                 {/* 2. Due Payments */}
                 <div className="bg-white shadow rounded-lg p-6">

@@ -43,8 +43,8 @@ export default function PublicLayout({
                                 Contact
                             </h3>
                             <ul className="mt-4 space-y-4">
-                                <li className="text-base text-gray-500">support@agencymanager.com</li>
-                                <li className="text-base text-gray-500">+92 300 1234567</li>
+                                <li className="text-base text-gray-500">shamsullahkhan94@gmail.com</li>
+                                <li className="text-base text-gray-500">0334704938</li>
                             </ul>
                         </div>
                     </div>

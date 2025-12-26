@@ -1,11 +1,21 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <LoginForm />
+        </Suspense>
+    );
+}
+
+function LoginForm() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const registered = searchParams.get('registered');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -64,6 +74,13 @@ export default function LoginPage() {
                         </a>
                     </p>
                 </div>
+
+                {registered && (
+                    <div className="mb-4 bg-green-50 text-green-700 p-4 rounded-lg text-sm text-center border border-green-200 shadow-sm animate-[fadeIn_0.5s_ease-out]">
+                        <p className="font-semibold text-base mb-1">Registration Successful!</p>
+                        <p>Please wait for Admin approval before logging in.</p>
+                    </div>
+                )}
 
                 {error && (
                     <div className="mb-4 bg-red-50 text-red-600 p-3 rounded-lg text-sm text-center border border-red-100 animate-[shake_0.5s_ease-in-out]">

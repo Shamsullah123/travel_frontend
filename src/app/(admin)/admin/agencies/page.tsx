@@ -142,58 +142,133 @@ export default function AgenciesPage() {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agency Name</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admin Email</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
-                            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {loading ? (
-                            <tr><td colSpan={5} className="p-4 text-center">Loading...</td></tr>
-                        ) : agencies.length === 0 ? (
-                            <tr><td colSpan={5} className="p-4 text-center text-gray-500">No agencies found</td></tr>
-                        ) : (
-                            agencies.map((agency) => {
-                                console.log('Agency Row:', agency); // Debug: Check for id vs _id
-                                return (
-                                    <tr key={agency.id || agency._id} className="hover:bg-gray-50 transition">
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{agency.name}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{agency.adminEmail}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                <div className="hidden md:block">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead className="bg-gray-50">
+                            <tr>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Agency Name</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admin Email</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Plan</th>
+                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody className="bg-white divide-y divide-gray-200">
+                            {loading ? (
+                                <tr><td colSpan={5} className="p-4 text-center">Loading...</td></tr>
+                            ) : agencies.length === 0 ? (
+                                <tr><td colSpan={5} className="p-4 text-center text-gray-500">No agencies found</td></tr>
+                            ) : (
+                                agencies.map((agency) => {
+                                    return (
+                                        <tr key={agency.id || agency._id} className="hover:bg-gray-50 transition">
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{agency.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{agency.adminEmail}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">
+                                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                         ${agency.status === 'Active' ? 'bg-green-100 text-green-800' :
-                                                    agency.status === 'Pending' ? 'bg-orange-100 text-orange-800' :
-                                                        agency.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
-                                                {agency.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{agency.subscriptionPlan}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                            {agency.status === 'Pending' && (
-                                                <>
-                                                    <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Active')} className="text-green-600 hover:text-green-900">Approve</button>
-                                                    <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Rejected')} className="text-red-600 hover:text-red-900">Reject</button>
-                                                </>
-                                            )}
-                                            {agency.status === 'Active' && (
-                                                <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Suspended')} className="text-orange-600 hover:text-orange-900">Suspend</button>
-                                            )}
-                                            {agency.status === 'Suspended' && (
-                                                <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Active')} className="text-blue-600 hover:text-blue-900">Activate</button>
-                                            )}
-                                            <button type="button" onClick={() => resetPassword(agency.id || agency._id)} className="text-gray-400 hover:text-gray-600 text-xs ml-2">Reset Pwd</button>
-                                        </td>
-                                    </tr>
-                                );
-                            })
-                        )}
-                    </tbody>
-                </table>
+                                                        agency.status === 'Pending' ? 'bg-orange-100 text-orange-800' :
+                                                            agency.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
+                                                    {agency.status}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{agency.subscriptionPlan}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                                                {agency.status === 'Pending' && (
+                                                    <>
+                                                        <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Active')} className="text-green-600 hover:text-green-900">Approve</button>
+                                                        <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Rejected')} className="text-red-600 hover:text-red-900">Reject</button>
+                                                    </>
+                                                )}
+                                                {agency.status === 'Active' && (
+                                                    <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Suspended')} className="text-orange-600 hover:text-orange-900">Suspend</button>
+                                                )}
+                                                {agency.status === 'Suspended' && (
+                                                    <button type="button" onClick={() => updateStatus(agency.id || agency._id, 'Active')} className="text-blue-600 hover:text-blue-900">Activate</button>
+                                                )}
+                                                <button type="button" onClick={() => resetPassword(agency.id || agency._id)} className="text-gray-400 hover:text-gray-600 text-xs ml-2">Reset Pwd</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Mobile Card View */}
+                <div className="md:hidden">
+                    {loading ? (
+                        <div className="p-4 text-center">Loading...</div>
+                    ) : agencies.length === 0 ? (
+                        <div className="p-4 text-center text-gray-500">No agencies found</div>
+                    ) : (
+                        <div className="divide-y divide-gray-100">
+                            {agencies.map((agency) => (
+                                <div key={agency.id || agency._id} className="p-4 space-y-3">
+                                    <div className="flex justify-between items-start">
+                                        <div>
+                                            <h3 className="text-sm font-medium text-gray-900">{agency.name}</h3>
+                                            <p className="text-xs text-gray-500 mt-0.5">{agency.adminEmail}</p>
+                                        </div>
+                                        <span className={`px-2 py-1 text-xs font-semibold rounded-full 
+                                            ${agency.status === 'Active' ? 'bg-green-100 text-green-800' :
+                                                agency.status === 'Pending' ? 'bg-orange-100 text-orange-800' :
+                                                    agency.status === 'Suspended' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'}`}>
+                                            {agency.status}
+                                        </span>
+                                    </div>
+
+                                    <div className="flex justify-between items-center text-xs text-gray-500">
+                                        <span>Plan: {agency.subscriptionPlan}</span>
+                                        <button
+                                            type="button"
+                                            onClick={() => resetPassword(agency.id || agency._id)}
+                                            className="text-indigo-600 hover:text-indigo-800"
+                                        >
+                                            Reset Password
+                                        </button>
+                                    </div>
+
+                                    <div className="flex gap-2 pt-2 border-t border-gray-50">
+                                        {agency.status === 'Pending' && (
+                                            <>
+                                                <button
+                                                    onClick={() => updateStatus(agency.id || agency._id, 'Active')}
+                                                    className="flex-1 py-1.5 px-3 bg-green-50 text-green-700 rounded text-xs font-medium hover:bg-green-100 text-center"
+                                                >
+                                                    Approve
+                                                </button>
+                                                <button
+                                                    onClick={() => updateStatus(agency.id || agency._id, 'Rejected')}
+                                                    className="flex-1 py-1.5 px-3 bg-red-50 text-red-700 rounded text-xs font-medium hover:bg-red-100 text-center"
+                                                >
+                                                    Reject
+                                                </button>
+                                            </>
+                                        )}
+                                        {agency.status === 'Active' && (
+                                            <button
+                                                onClick={() => updateStatus(agency.id || agency._id, 'Suspended')}
+                                                className="flex-1 py-1.5 px-3 bg-orange-50 text-orange-700 rounded text-xs font-medium hover:bg-orange-100 text-center"
+                                            >
+                                                Suspend
+                                            </button>
+                                        )}
+                                        {agency.status === 'Suspended' && (
+                                            <button
+                                                onClick={() => updateStatus(agency.id || agency._id, 'Active')}
+                                                className="flex-1 py-1.5 px-3 bg-blue-50 text-blue-700 rounded text-xs font-medium hover:bg-blue-100 text-center"
+                                            >
+                                                Activate
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

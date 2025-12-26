@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BACKEND_URL: 'http://127.0.0.1:5000',
     NEXT_PUBLIC_API_URL: 'http://127.0.0.1:5000/api',
   },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 
   /* config options here */
 };

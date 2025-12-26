@@ -193,8 +193,8 @@ export default function Sidebar() {
             {/* Desktop Sidebar (Hidden on mobile) */}
             <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
                 <div className="flex-1 flex flex-col min-h-0 bg-gray-900">
-                    <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-900 border-b border-gray-800">
-                        <h1 className="text-xl font-bold text-white tracking-wider">
+                    <div className="flex items-center min-h-[4rem] flex-shrink-0 px-4 bg-gray-900 border-b border-gray-800 py-4">
+                        <h1 className="text-base font-bold text-white tracking-wide break-words leading-tight">
                             {session?.user?.agencyName ? session.user.agencyName.toUpperCase() : 'AGENCY MANAGER'}
                         </h1>
                     </div>

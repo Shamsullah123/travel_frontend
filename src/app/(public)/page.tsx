@@ -70,7 +70,7 @@ export default function LandingPage() {
                             {/* Trust Indicators */}
                             <div className="pt-8 opacity-0 animate-[fadeInUp_0.8s_ease-out_0.5s_forwards]">
                                 <p className="text-sm text-gray-500 mb-4">Trusted by travel agencies worldwide</p>
-                                <div className="flex items-center gap-8 justify-center lg:justify-start">
+                                <div className="flex flex-wrap items-center gap-4 sm:gap-8 justify-center lg:justify-start">
                                     <div className="text-center">
                                         <div className="text-3xl font-bold text-gray-900">500+</div>
                                         <div className="text-sm text-gray-600">Active Agencies</div>
@@ -158,6 +158,57 @@ export default function LandingPage() {
                 </div>
             </section>
 
+            {/* Pricing Section */}
+            <section id="pricing" className="py-24 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center max-w-3xl mx-auto mb-16">
+                        <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                            Simple, Transparent Pricing
+                        </h2>
+                        <p className="mt-4 text-xl text-gray-500">
+                            Everything you need to grow your agency.
+                        </p>
+                    </div>
+
+                    <div className="max-w-lg mx-auto rounded-2xl shadow-xl border border-indigo-100 bg-white overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <div className="px-6 py-8 bg-indigo-50 sm:p-10 sm:pb-6 text-center">
+                            <h3 className="text-2xl font-bold text-indigo-700 tracking-tight">Standard Plan</h3>
+                            <div className="mt-4 flex items-baseline justify-center text-5xl font-extrabold text-gray-900">
+                                Rs. 1000
+                                <span className="ml-1 text-2xl font-medium text-gray-500">/mo</span>
+                            </div>
+                            <p className="mt-4 text-gray-500">Full access to all features</p>
+                        </div>
+                        <div className="px-6 pt-6 pb-8 bg-gray-50 sm:p-10 sm:pt-6">
+                            <ul className="space-y-4">
+                                {[
+                                    'Unlimited Visas & Bookings',
+                                    'Advanced Accounting',
+                                    'Customer CRM',
+                                    'Marketplace Access',
+                                    '24/7 Support'
+                                ].map((feature) => (
+                                    <li key={feature} className="flex items-start">
+                                        <div className="flex-shrink-0">
+                                            <CheckCircle2 className="w-5 h-5 text-green-500" />
+                                        </div>
+                                        <p className="ml-3 text-base text-gray-700">{feature}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="mt-8 rounded-md shadow">
+                                <Link
+                                    href="/auth/register"
+                                    className="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 w-full"
+                                >
+                                    Get Started
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {/* CTA Section */}
             <section className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 overflow-hidden">
                 {/* Animated background shapes */}
@@ -202,6 +253,11 @@ const features = [
         name: 'Visa Management',
         description: 'Track visa statuses, expiry dates, and follow-ups effortlessly with automated reminders.',
         icon: <Plane className="w-7 h-7" />,
+    },
+    {
+        name: 'Sell & Buy Visas/Tickets',
+        description: 'Seamlessly trade visas and tickets on our integrated marketplace.',
+        icon: <Sparkles className="w-7 h-7" />,
     },
     {
         name: 'Accounting & Ledger',

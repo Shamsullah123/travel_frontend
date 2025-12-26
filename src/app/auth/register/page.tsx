@@ -39,18 +39,8 @@ export default function RegisterPage() {
                 password: formData.password
             });
 
-            // Auto login after registration
-            const result = await signIn("credentials", {
-                redirect: false,
-                email: formData.email,
-                password: formData.password,
-            });
-
-            if (result?.error) {
-                setError(result.error);
-            } else {
-                router.push('/dashboard');
-            }
+            // Redirect to login with success message
+            router.push('/auth/login?registered=true');
         } catch (err: any) {
             setError(err.message || 'Registration failed');
         } finally {

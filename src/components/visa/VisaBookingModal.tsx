@@ -55,7 +55,7 @@ const createVisaBookingSchema = (visa: VisaGroupType | null) => {
         applicants: z.array(z.object({
             fullName: z.string().min(2, "Name required"),
             gender: z.enum(["Male", "Female"]),
-            dob: z.string().refine((val) => new Date(val) < new Date(), "Invalid DOB"),
+            passportIssueDate: z.string().refine((val) => new Date(val) < new Date(), "Invalid Date"),
             passportNumber: z.string().min(5, "Passport required"),
             passportExpiry: z.string().refine((val) => {
                 const expiry = new Date(val);
@@ -134,7 +134,7 @@ export default function VisaBookingModal({ isOpen, onClose, visa, onSubmit }: Vi
         resolver: zodResolver(createVisaBookingSchema(visa)) as any,
         defaultValues: {
             quantity: 1,
-            applicants: [{ fullName: '', gender: 'Male', dob: '', passportNumber: '', passportExpiry: '', nationality: '' }],
+            applicants: [{ fullName: '', gender: 'Male', passportIssueDate: '', passportNumber: '', passportExpiry: '', nationality: '' }],
             payment: { discount: 0, paymentMethod: 'Cash' }
         },
         mode: 'onSubmit', // Changed to onSubmit so errors show when clicking Pay button
@@ -162,7 +162,7 @@ export default function VisaBookingModal({ isOpen, onClose, visa, onSubmit }: Vi
                 append({
                     fullName: '',
                     gender: 'Male',
-                    dob: '',
+                    passportIssueDate: '',
                     passportNumber: '',
                     passportExpiry: '',
                     nationality: '',
@@ -266,9 +266,9 @@ export default function VisaBookingModal({ isOpen, onClose, visa, onSubmit }: Vi
                                             </select>
                                         </div>
                                         <div>
-                                            <label className="text-xs text-gray-500">Date of Birth</label>
-                                            <input type="date" {...register(`applicants.${index}.dob` as const)} className="w-full border p-2 rounded text-sm" />
-                                            {errors.applicants?.[index]?.dob && <span className="text-red-500 text-xs">{errors.applicants[index]?.dob?.message}</span>}
+                                            <label className="text-xs text-gray-500">Passport Issue Date</label>
+                                            <input type="date" {...register(`applicants.${index}.passportIssueDate` as const)} className="w-full border p-2 rounded text-sm" />
+                                            {errors.applicants?.[index]?.passportIssueDate && <span className="text-red-500 text-xs">{errors.applicants[index]?.passportIssueDate?.message}</span>}
                                         </div>
                                         <div>
                                             <label className="text-xs text-gray-500">Passport Number</label>

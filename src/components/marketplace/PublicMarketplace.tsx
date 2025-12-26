@@ -125,45 +125,53 @@ export default function PublicMarketplace() {
 
                 {/* Filters */}
                 <div className="bg-gray-50 p-4 rounded-lg shadow-sm mb-6 flex flex-wrap gap-4 justify-center">
-                    <input
-                        list="sector-list-public"
-                        placeholder="Filter by Sector..."
-                        className="border p-2 rounded w-64"
-                        value={filters.sector}
-                        onChange={e => setFilters({ ...filters, sector: e.target.value })}
-                    />
+                    <div className="w-full sm:w-auto">
+                        <input
+                            list="sector-list-public"
+                            placeholder="Filter by Sector..."
+                            className="border p-2 rounded w-full sm:w-64"
+                            value={filters.sector}
+                            onChange={e => setFilters({ ...filters, sector: e.target.value })}
+                        />
+                    </div>
                     <datalist id="sector-list-public">
                         {configOptions.sector.map(s => <option key={s} value={s} />)}
                     </datalist>
 
-                    <select
-                        className="border p-2 rounded w-48"
-                        value={filters.travel_type}
-                        onChange={e => setFilters({ ...filters, travel_type: e.target.value })}
-                    >
-                        <option value="">All Travel Types</option>
-                        {configOptions.travel_type.map(type => (
-                            <option key={type} value={type}>{type}</option>
-                        ))}
-                    </select>
+                    <div className="w-full sm:w-auto">
+                        <select
+                            className="border p-2 rounded w-full sm:w-48"
+                            value={filters.travel_type}
+                            onChange={e => setFilters({ ...filters, travel_type: e.target.value })}
+                        >
+                            <option value="">All Travel Types</option>
+                            {configOptions.travel_type.map(type => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                    <input
-                        list="airline-list-public"
-                        placeholder="Filter by Airline..."
-                        className="border p-2 rounded w-48"
-                        value={filters.airline}
-                        onChange={e => setFilters({ ...filters, airline: e.target.value })}
-                    />
+                    <div className="w-full sm:w-auto">
+                        <input
+                            list="airline-list-public"
+                            placeholder="Filter by Airline..."
+                            className="border p-2 rounded w-full sm:w-48"
+                            value={filters.airline}
+                            onChange={e => setFilters({ ...filters, airline: e.target.value })}
+                        />
+                    </div>
                     <datalist id="airline-list-public">
                         {configOptions.airline.map(a => <option key={a} value={a} />)}
                     </datalist>
 
-                    <input
-                        type="date"
-                        className="border p-2 rounded w-40"
-                        value={filters.date}
-                        onChange={e => setFilters({ ...filters, date: e.target.value })}
-                    />
+                    <div className="w-full sm:w-auto">
+                        <input
+                            type="date"
+                            className="border p-2 rounded w-full sm:w-40"
+                            value={filters.date}
+                            onChange={e => setFilters({ ...filters, date: e.target.value })}
+                        />
+                    </div>
 
                     <div className="flex items-center gap-2 border p-2 rounded bg-white">
                         <span className="text-sm text-gray-500">Sort:</span>
@@ -184,7 +192,8 @@ export default function PublicMarketplace() {
                 </div>
 
                 {/* Table */}
-                <div className="bg-white rounded-lg shadow overflow-hidden border">
+                {/* Desktop Table View */}
+                <div className="hidden md:block bg-white rounded-lg shadow overflow-hidden border">
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
@@ -288,6 +297,93 @@ export default function PublicMarketplace() {
                         </table>
                     </div>
                 </div>
+
+                {/* Mobile Card View */}
+                <div className="md:hidden space-y-4">
+                    {ticketGroups
+                        .filter((group: any) => {
+                            const groupDate = new Date(group.date.$date || group.date);
+                            const today = new Date();
+                            today.setHours(0, 0, 0, 0);
+                            return group.available_seats > 0 && groupDate >= today;
+                        })
+                        .map((group: any) => (
+                            <div key={group._id?.$oid || group._id} className="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                <div className="flex justify-between items-start mb-3">
+                                    <div>
+                                        <div className="font-bold text-gray-900 text-lg">{group.airline}</div>
+                                        <div className="text-sm text-gray-500 font-medium">{group.sector}</div>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className="inline-block bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded-full font-medium mb-1">
+                                            {group.travel_type}
+                                        </span>
+                                        <div className="text-lg font-bold text-indigo-600">Rs. {group.price_per_seat?.toLocaleString()}</div>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-2 gap-4 text-sm mb-4 border-t border-b border-gray-100 py-3">
+                                    <div>
+                                        <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Flight</div>
+                                        <div className="font-medium">{group.flight_no}</div>
+                                        <div className="text-gray-600">{new Date(group.date.$date || group.date).toLocaleDateString()}</div>
+                                        <div className="text-xs text-gray-500 mt-1">
+                                            Dep: {(() => {
+                                                const time = group.departure_time || group.time;
+                                                if (!time) return '';
+                                                const [h, m] = time.split(':');
+                                                const hour = parseInt(h);
+                                                return `${hour % 12 || 12}:${m} ${hour >= 12 ? 'PM' : 'AM'}`;
+                                            })()}
+                                        </div>
+                                    </div>
+
+                                    {group.return_flight_no ? (
+                                        <div>
+                                            <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Return</div>
+                                            <div className="font-medium">{group.return_flight_no}</div>
+                                            <div className="text-gray-600">{group.return_date && new Date(group.return_date.$date || group.return_date).toLocaleDateString()}</div>
+                                            <div className="text-xs text-gray-500 mt-1">
+                                                {group.return_departure_time && <span>Dep: {group.return_departure_time}</span>}
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Seats</div>
+                                            <div className="font-medium">{group.available_seats} / {group.total_seats}</div>
+                                            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                                                <div
+                                                    className="bg-green-500 h-1.5 rounded-full"
+                                                    style={{ width: `${(group.available_seats / group.total_seats) * 100}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="flex justify-between items-center pt-2">
+                                    <div className="text-xs text-gray-500">
+                                        {group.agency_contact ? (
+                                            <span className="font-medium text-gray-900">{group.agency_contact.name}</span>
+                                        ) : (
+                                            <span>Verified Agency</span>
+                                        )}
+                                    </div>
+                                    <Link
+                                        href="/auth/login"
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                                    >
+                                        Book Now
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    {ticketGroups.length === 0 && !loading && (
+                        <div className="p-8 text-center text-gray-500 bg-gray-50 rounded-lg">
+                            No active tickets found matching your criteria.
+                        </div>
+                    )}
+                </div>
                 {loading && (
                     <div className="p-8 text-center text-gray-500">Loading marketplace...</div>
                 )}
@@ -306,30 +402,35 @@ export default function PublicMarketplace() {
 
                 {/* Visa Filters */}
                 <div className="bg-gray-50 p-4 rounded-lg shadow-sm mb-6 flex flex-wrap gap-4 justify-center">
-                    <input
-                        type="text"
-                        placeholder="Filter by Country..."
-                        className="border p-2 rounded w-64"
-                        value={visaFilters.country}
-                        onChange={(e) => setVisaFilters({ ...visaFilters, country: e.target.value })}
-                    />
-                    <select
-                        className="border p-2 rounded w-48"
-                        value={visaFilters.type}
-                        onChange={(e) => setVisaFilters({ ...visaFilters, type: e.target.value })}
-                    >
-                        <option value="">All Visa Types</option>
-                        <option value="Work">Work</option>
-                        <option value="Umrah">Umrah</option>
-                        <option value="Visit">Visit</option>
-                        <option value="Family">Family</option>
-                        <option value="Business">Business</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <div className="w-full sm:w-auto">
+                        <input
+                            type="text"
+                            placeholder="Filter by Country..."
+                            className="border p-2 rounded w-full sm:w-64"
+                            value={visaFilters.country}
+                            onChange={(e) => setVisaFilters({ ...visaFilters, country: e.target.value })}
+                        />
+                    </div>
+                    <div className="w-full sm:w-auto">
+                        <select
+                            className="border p-2 rounded w-full sm:w-48"
+                            value={visaFilters.type}
+                            onChange={(e) => setVisaFilters({ ...visaFilters, type: e.target.value })}
+                        >
+                            <option value="">All Visa Types</option>
+                            <option value="Work">Work</option>
+                            <option value="Umrah">Umrah</option>
+                            <option value="Visit">Visit</option>
+                            <option value="Family">Family</option>
+                            <option value="Business">Business</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
                 </div>
 
                 {/* Visa Table */}
-                <div className="bg-white rounded-lg shadow overflow-hidden border">
+                {/* Desktop Visa Table */}
+                <div className="hidden md:block bg-white rounded-lg shadow overflow-hidden border">
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
                             <thead className="bg-gray-50">
@@ -391,6 +492,53 @@ export default function PublicMarketplace() {
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                {/* Mobile Visa Cards */}
+                <div className="md:hidden space-y-4">
+                    {visaGroups
+                        .filter(v => v.available_visas > 0)
+                        .map((visa) => (
+                            <div key={visa._id} className="bg-white p-4 rounded-lg shadow border border-gray-100">
+                                <div className="flex justify-between items-start mb-2">
+                                    <div className="font-bold text-gray-900 text-lg">{visa.visa_title}</div>
+                                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                                        {visa.visa_type}
+                                    </span>
+                                </div>
+
+                                <div className="text-sm text-gray-600 mb-2">{visa.country}</div>
+
+                                <div className="grid grid-cols-2 gap-4 text-sm mb-4 border-t border-b border-gray-100 py-3">
+                                    <div>
+                                        <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Validity</div>
+                                        <div className="font-medium">{visa.visa_validity_days} Days</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xs text-gray-400 uppercase font-semibold mb-1">Availability</div>
+                                        <div className="font-medium">{visa.available_visas} / {visa.total_visas}</div>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-between items-end">
+                                    <div>
+                                        <div className="text-xs text-gray-500 mb-1">Price</div>
+                                        <div className="text-xl font-bold text-indigo-600">Rs. {visa.price_per_visa.toLocaleString()}</div>
+                                    </div>
+                                    <Link
+                                        href="/auth/login"
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                                    >
+                                        Book Now
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    {visaGroups.length === 0 && !loadingVisas && (
+                        <div className="p-8 text-center text-gray-500 bg-gray-50 rounded-lg">
+                            No active visas found.
+                        </div>
+                    )}
                 </div>
                 {loadingVisas && (
                     <div className="p-8 text-center text-gray-500">Loading visas...</div>
